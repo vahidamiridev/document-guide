@@ -1,0 +1,121 @@
+
+
+
+
+
+
+Register-------------------------------------------------------------------
+ 
+ Sign Up for An EmailJS Account
+ Add an Email Service
+Create an Email Template
+and give keys an d IDs ,next use its
+
+
+https://www.abstractapi.com/guides/react-send-email-from-your-app-without-a-backend
+
+includes:
+
+
+$ npm install --save email-js
+or 
+$ yarn add email-js
+
+
+next,
+
+
+
+Use the .sendForm Function to Send an Email
+The EmailJS SDK provides two methods for sending emails from React.
+Those are 
+ 
+ 
+ emailjs.send() 
+ 
+ and 
+ 
+ emailjs.sendForm(). 
+ 
+ We’ll use sendForm as it allows us to capture all the data in our contact form. 
+
+
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
+ 
+const EmailContactForm = () => {
+ const form = useRef();
+ 
+ const sendEmail = (e) => {
+   e.preventDefault(); // prevents the page from reloading when you hit “Send”
+ 
+   emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_PUBLIC_KEY')
+     .then((result) => {
+         // show the user a success message
+     }, (error) => {
+         // show the user an error
+     });
+ };
+ 
+ return (
+   <form ref={form} onSubmit={sendEmail}>
+     <label>Name</label>
+     <input type="text" name="user_name" />
+     <label>Email</label>
+     <input type="email" name="user_email" />
+     <label>Message</label>
+     <textarea name="message" />
+     <input type="submit" value="Send" />
+   </form>
+ );
+};
+ 
+export default EmailContactForm;
+
+
+(emalijs[a librarys of SMTP]):
+
+
+What is SMTP?
+
+SMTP stands for Simple Mail Transfer Protocol.
+ It is a set of rules that govern how emails should be sent and received. 
+ It is similar to HTTP (Hyper Text Transfer Protocol),
+ which governs how webpages and web app data should be sent and received. 
+ It runs on top of TCP (Transmission Control Protocol),
+ which enables applications to communicate with each other over the web.
+ ....................................................................................................
+ service ID: service_4dpqxsb                                      vahidamiri31137@gmail.com
+.......................................
+
+Template ID:template_hhabggf
+
+...........
+
+public key :oki4QMxFad-5IutjL
+
+............
+
+
+private key : JoXlU0xP6xtq1-bQaafCt
+ 
+ 
+ 
+ ........................................................................................................................
+
+
+service ID: service_ijo3tv4                                          vahidamiri.dev@gmail.com
+.......................................
+
+Template ID:template_ftshqgc
+
+...........
+
+public key :rOJ7znmgce4lVwb2b
+
+............
+
+
+private key : ASGKa7hWtrAw_gPX0exeK
+
+......................................................................................................................

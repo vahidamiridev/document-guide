@@ -1,0 +1,37 @@
+step 1 :
+npx create-react-app name-of-our-PWA-app --template cra-template-pwa
+step 2:
+Focus back on the index.js file
+unRegister() change to Register()
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://cra.link/PWA
+serviceWorkerRegistration.register(); //change the service worker registration from 'unregistered' to 'registered'
+
+
+step 4:
+npm install serve
+npm run build
+serve -s build //if you encounter an error with this command, try 'npx serve -s build'
+
+
+in public/manifest.json copy and paste code below:
+
+{
+  "short_name": "React PWA App",
+  "name": "ReactJS PWA App",
+  "icons": [
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+focus  ...when src of image change to logo512.png ,it was  ok .

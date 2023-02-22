@@ -1,0 +1,92 @@
+
+
+npx create-react-app electron-react-app
+cd electron-react-app
+npm install --save-dev electron@latest electron-is-dev
+
+Now add the Electron index file inside the /public directory - /public/electron.js:
+
+const path = require('path');
+
+const { app, BrowserWindow } = require('electron');
+const isDev = require('electron-is-dev');
+
+function createWindow() {
+  // Create the browser window.
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+  });
+
+  // and load the index.html of the app.
+  // win.loadFile("index.html");
+  win.loadURL(
+    isDev
+      ? 'http://localhost:3000'
+      : `file://${path.join(__dirname, '../build/index.html')}`
+  );
+  // Open the DevTools.
+  if (isDev) {
+    win.webContents.openDevTools({ mode: 'detach' });
+  }
+}
+
+app.whenReady().then(createWindow);
+
+app.on('window-all-closed', () => {
+    app.quit();
+});
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
+});
+
+--------------------------------------------------------------------------------------
+
+electron-is-dev will open the Chromium Dev Tools when your app is not detached!
+Just as before I will use concurrently to run my react and electron app side-by-side:
+
+npm install --save-dev concurrently wait-on
+
+
+
+Now I have to set the electron.js file as the main ingress and add two scripts that allow me to run both apps:
+
+  "main": "public/electron.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
+    "electron": "wait-on tcp:3000 && electron ."
+  },
+  npm run dev
+
+BROWSER=none
+ERROR: to start Create-React-App without opening the app inside your browser you have to set the environment variable BROWSER=none. This led me to the following error message:
+> concurrently --kill-others "BROWSER=none npm start" "npm run electron"
+[0] 'BROWSER' is not recognized as an internal or external command,
+[0] operable program or batch file.
+[0] BROWSER=none npm start exited with code 1
+--> Sending SIGTERM to other processes..
+[1] npm run electron exited with code 1
+
+
+I was able to solve this issue by installing cross-env:
+
+npm install --save cross-env
+
+And change to script to:
+
+"dev": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm:electron\"",
+
+Run the App
+The App now starts up with:
+
+npm run dev

@@ -1,0 +1,60 @@
+https://blog.codemagic.io/building-electron-desktop-apps-with-react/
+
+Error....
+// 
+//[0] 'BROWSER' is not recognized as an internal or external command,
+//[0] operable program or batch file.
+//[0] BROWSER=none npm start exited with code 1
+//--> Sending SIGTERM to other processes..
+//[1] npm run electron exited with code
+
+for solution ,help this :https://mpolinowski.github.io/docs/Development/Javascript/2021-05-09-electron13-and-react/2021-05-09/
+
+//I was able to solve this issue by installing cross-env:
+//npm install --save cross-env
+//And change to script to:
+//"dev": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm:electron\"",
+
+--------------------------------------------------------------------------------------------------------
+for compiling to A.exe :
+
+1)
+
+# for use in npm scripts //
+npm install electron-packager --save-dev
+
+# for use from cli     //انتخاب من
+npm install electron-packager -g
+And package or deploy using:
+2)
+electron-packager <sourcedir> <appname> --platform=win32 --arch=x86_64
+//sourcedir---->./
+//appname------>اسم فولدر برنامه
+3)
+ERROR:
+electron-packager : File C:\Users\Developer\AppData\Roaming\npm\electron-packager.ps1 cannot be loaded because running scripts is disabled on 
+this system
+
+soloution :	
+How To Fix Error PS1 Can Not Be Loaded Because Running Scripts Is Disabled On This System In Angular
+1-Open PowerShell as Adminstrator.
+2-Run
+وارد کردن دستور زیر وجهت ادامه زدن دکمه
+Y
+3-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted جهت اجازه گرفتن از ویندوز  برای انجام بعضی از اسکریپت های ناشناس 
+
+وازدوباره 
+electron-packager <sourcedir> <appname> --platform=win32 --arch=x86_64
+
+
+
+
+ok...finish
+matter:so now,I have the folder in app (stock-app-win32-x64) includs some folder and file ,a folder called resource and 
+I wanted this folder was hiiden so..
+you can read this article for Asar:
+ https://github.com/nils-kt/asar-package-obfuscator,
+ https://stackoverflow.com/questions/37948187/hide-source-code-from-build-executable-in-electron-app,
+ https://github.com/electron/electron-packager/issues/152,
+with this ,you can change reesourse file to minify`s file
+I was busy so I didn`t read
